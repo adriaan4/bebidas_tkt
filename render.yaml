@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: traketeros
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      # Pega aquí (o mejor, en el panel de Render) la cadena de conexión
+      # de tu Postgres para que el carrito no se borre nunca.
+      - key: DATABASE_URL
+        sync: false

@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Traketeros · bebidas al mejor precio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#171326;
+  --noche:#241D3D;
+  --papel:#E7EFE9;
+  --papel-2:#F4F8F4;
+  --magenta:#D4225C;
+  --mostaza:#F2A51C;
+  --botella:#0B5C46;
+  --gris:#6B6A78;
+  --linea:rgba(23,19,38,.14);
+  --card:#FFFFFF;
+  --tag-text:#FFFFFF;
+  --sombra:0 1px 0 rgba(23,19,38,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --tinta:#F0EEF6;
+    --noche:#0E0B18;
+    --papel:#141120;
+    --papel-2:#1B1729;
+    --magenta:#FF5C86;
+    --mostaza:#F5B640;
+    --botella:#3FBF96;
+    --gris:#A3A0B4;
+    --linea:rgba(240,238,246,.16);
+    --card:#1E1A2E;
+    --sombra:0 1px 0 rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --tinta:#F0EEF6;--noche:#0E0B18;--papel:#141120;--papel-2:#1B1729;
+  --magenta:#FF5C86;--mostaza:#F5B640;--botella:#3FBF96;--gris:#A3A0B4;
+  --linea:rgba(240,238,246,.16);--card:#1E1A2E;--sombra:0 1px 0 rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--papel);
+  color:var(--tinta);
+  font-family:"Work Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.5;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px 120px}
+h1,h2,h3{margin:0;font-family:"Anton",Impact,"Arial Narrow",sans-serif;font-weight:400;letter-spacing:.01em;text-transform:none}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+input,select{font-family:inherit;font-size:1rem}
+:focus-visible{outline:3px solid var(--mostaza);outline-offset:2px}
+@media (prefers-reduced-motion:no-preference){
+  .sheet{transition:transform .18s ease}
+}
+
+/* ---------- cartel ---------- */
+header.cartel{
+  background:var(--noche);color:#F7F4EC;
+  margin:0 -16px 0;padding:22px 20px 18px;
+  border-bottom:6px solid var(--mostaza);
+}
+.cartel .kicker{font-size:.8rem;color:var(--mostaza);font-weight:600}
+.cartel h1{
+  font-size:clamp(2.1rem,10vw,3.6rem);line-height:.92;margin:.15em 0 .1em;
+  color:#F7F4EC;
+}
+.cartel h1 em{font-style:normal;display:block;color:var(--mostaza)}
+.cartel p{margin:.4em 0 0;font-size:.92rem;color:rgba(247,244,236,.72);max-width:46ch}
+.yo{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:.88rem;color:rgba(247,244,236,.8);flex-wrap:wrap}
+.yo strong{color:#fff}
+.yo button{background:none;border:1px solid rgba(247,244,236,.35);color:rgba(247,244,236,.85);border-radius:999px;padding:3px 10px;font-size:.78rem}
+
+/* ---------- login ---------- */
+.login{min-height:100dvh;display:grid;place-items:center;background:var(--noche);padding:24px}
+.login-box{width:100%;max-width:420px;color:#F7F4EC}
+.login-box .kicker{color:var(--mostaza);font-weight:600;font-size:.85rem}
+.login-box h1{font-size:clamp(2.3rem,11vw,3.4rem);line-height:.92;margin:.1em 0 .5em;color:#F7F4EC}
+.login-box h1 em{font-style:normal;display:block;color:var(--mostaza)}
+.login-box p{color:rgba(247,244,236,.72);font-size:.95rem;margin:0 0 18px}
+.login-row{display:flex;gap:8px}
+.login-row input{
+  flex:1;min-width:0;padding:14px 14px;border-radius:10px;border:2px solid rgba(247,244,236,.25);
+  background:rgba(255,255,255,.06);color:#fff;
+}
+.login-row input::placeholder{color:rgba(247,244,236,.5)}
+.btn-fuerte{
+  background:var(--magenta);color:#fff;border:none;border-radius:10px;
+  padding:14px 18px;font-weight:700;
+}
+
+/* ---------- pestañas ---------- */
+nav.tabs{
+  display:flex;gap:6px;position:sticky;top:0;z-index:20;
+  background:var(--papel);padding:10px 0;border-bottom:1px solid var(--linea);
+}
+nav.tabs button{
+  flex:1;padding:11px 8px;border-radius:999px;border:1px solid var(--linea);
+  background:var(--card);color:var(--tinta);font-weight:600;font-size:.92rem;
+}
+nav.tabs button[aria-selected="true"]{background:var(--tinta);color:var(--papel);border-color:var(--tinta)}
+nav.tabs .n{
+  display:inline-block;min-width:1.5em;margin-left:5px;padding:0 5px;border-radius:999px;
+  background:var(--magenta);color:#fff;font-size:.78rem;font-weight:700
+}
+
+/* ---------- buscador ---------- */
+.buscador{margin:16px 0 10px;position:relative}
+.buscador input{
+  width:100%;padding:16px 44px 16px 16px;border-radius:12px;border:2px solid var(--tinta);
+  background:var(--card);color:var(--tinta);font-size:1.05rem;font-weight:500;
+}
+.buscador .lupa{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--gris);font-size:1.1rem}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px;-webkit-overflow-scrolling:touch}
+.chips button{
+  white-space:nowrap;border-radius:999px;border:1px solid var(--linea);background:var(--card);
+  color:var(--tinta);padding:7px 13px;font-size:.85rem
+}
+.chips button[aria-pressed="true"]{background:var(--botella);color:#fff;border-color:var(--botella)}
+
+.aviso{
+  font-size:.82rem;color:var(--gris);border-left:3px solid var(--mostaza);
+  padding:6px 0 6px 10px;margin:4px 0 14px
+}
+
+/* ---------- producto ---------- */
+.prod{
+  background:var(--card);border:1px solid var(--linea);border-radius:14px;
+  padding:14px;margin-bottom:12px;box-shadow:var(--sombra)
+}
+.prod-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.prod h3{font-size:1.18rem;line-height:1.15}
+.prod .fmt{font-size:.82rem;color:var(--gris);margin-top:2px}
+.prod .cat{font-size:.72rem;color:var(--botella);font-weight:700;white-space:nowrap}
+.precios{margin-top:10px;display:grid;gap:6px}
+.fila{
+  display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;
+  padding:8px 10px;border-radius:10px;background:var(--papel-2)
+}
+.fila.mejor{background:rgba(11,92,70,.1);box-shadow:inset 0 0 0 1.5px var(--botella)}
+.fila .super{font-weight:600;font-size:.92rem;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.fila .super .mejor-tag{
+  display:inline-block;margin-left:6px;background:var(--botella);color:var(--tag-text);
+  font-size:.66rem;font-weight:700;padding:1px 6px;border-radius:999px;vertical-align:1px
+}
+.fila .eur{font-family:"Anton",sans-serif;font-size:1.15rem;letter-spacing:.02em}
+.fila .eur small{font-family:"Work Sans",sans-serif;font-size:.7rem;color:var(--gris);font-weight:500;margin-left:4px}
+.fila .add{
+  border:none;background:var(--magenta);color:#fff;border-radius:9px;
+  padding:8px 12px;font-weight:700;font-size:.86rem
+}
+.fila .add.puesto{background:var(--botella)}
+.prod-acciones{display:flex;gap:14px;margin-top:10px}
+.linkish{background:none;border:none;padding:0;color:var(--gris);font-size:.82rem;text-decoration:underline}
+.edit-precios{margin-top:10px;display:grid;gap:6px;border-top:1px dashed var(--linea);padding-top:10px}
+.edit-fila{display:grid;grid-template-columns:1fr 100px;gap:8px;align-items:center;font-size:.88rem}
+.edit-fila input{padding:7px 8px;border-radius:8px;border:1px solid var(--linea);background:var(--papel-2);color:var(--tinta);width:100%}
+.vacio{padding:26px 4px;color:var(--gris)}
+.vacio b{color:var(--tinta);display:block;font-size:1.05rem;margin-bottom:4px}
+
+/* ---------- carrito ---------- */
+.total-band{
+  background:var(--tinta);color:var(--papel);border-radius:14px;padding:16px;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;margin:16px 0 14px
+}
+.total-band .big{font-family:"Anton",sans-serif;font-size:2.1rem;line-height:1}
+.total-band .lbl{font-size:.8rem;opacity:.75}
+.item{
+  background:var(--card);border:1px solid var(--linea);border-radius:12px;padding:12px;
+  margin-bottom:9px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center
+}
+.item .n{font-weight:600;line-height:1.25}
+.item .meta{font-size:.8rem;color:var(--gris);margin-top:3px}
+.item .meta .quien{color:var(--magenta);font-weight:700}
+.item-der{display:flex;align-items:center;gap:6px}
+.qty{display:flex;align-items:center;border:1px solid var(--linea);border-radius:9px;overflow:hidden}
+.qty button{background:var(--papel-2);border:none;color:var(--tinta);width:32px;height:32px;font-size:1.1rem;line-height:1}
+.qty span{min-width:26px;text-align:center;font-weight:700;font-size:.92rem}
+.del{background:none;border:1px solid var(--linea);color:var(--magenta);border-radius:9px;width:34px;height:34px;font-size:1rem}
+.item .eur{font-family:"Anton",sans-serif;font-size:1.05rem;min-width:56px;text-align:right}
+.resumen{margin-top:20px}
+.resumen h3{font-size:1.05rem;margin-bottom:8px}
+.res-fila{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--linea);font-size:.92rem}
+.res-fila span:last-child{font-weight:700}
+.acciones-carrito{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.acciones-carrito button{
+  border:1px solid var(--tinta);background:var(--card);color:var(--tinta);
+  border-radius:10px;padding:11px 14px;font-weight:600;font-size:.9rem
+}
+.acciones-carrito button.primario{background:var(--botella);border-color:var(--botella);color:#fff}
+.acciones-carrito button.peligro{border-color:var(--magenta);color:var(--magenta)}
+
+/* ---------- añadir producto ---------- */
+.form-nuevo{background:var(--card);border:1px solid var(--linea);border-radius:14px;padding:14px;margin:14px 0}
+.form-nuevo h3{font-size:1.1rem;margin-bottom:10px}
+.campos{display:grid;gap:9px;grid-template-columns:1fr 1fr}
+.campos label{font-size:.78rem;color:var(--gris);display:block;margin-bottom:3px}
+.campos input,.campos select{width:100%;padding:10px;border-radius:9px;border:1px solid var(--linea);background:var(--papel-2);color:var(--tinta)}
+.campos .ancho{grid-column:1/-1}
+.pie{font-size:.8rem;color:var(--gris);margin-top:26px;border-top:1px solid var(--linea);padding-top:14px}
+.estado{font-size:.78rem;color:var(--gris);margin-top:8px}
+.estado b{color:var(--tinta)}
+.toast{
+  position:fixed;left:16px;right:16px;bottom:16px;max-width:520px;margin:0 auto;
+  background:var(--tinta);color:var(--papel);padding:12px 14px;border-radius:12px;
+  font-size:.9rem;z-index:60;box-shadow:0 8px 24px rgba(0,0,0,.25)
+}
+@media (min-width:640px){
+  .campos{grid-template-columns:1fr 1fr 1fr}
+  .fila{grid-template-columns:1fr 130px auto}
+}
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+<div id="toast-host"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   1. SUPERMERCADOS Y CATÁLOGO BASE
+   Precios ORIENTATIVOS (referencia septiembre 2026).
+   Cualquiera puede corregirlos desde la web: "Editar precios".
+   ============================================================ */
+var SUPERS = ["Mercadona","Carrefour","Dia","Alcampo","Lidl","El Corte Inglés"];
+var WEBS = {
+  "Mercadona":"https://www.mercadona.es",
+  "Carrefour":"https://www.carrefour.es/supermercado",
+  "Dia":"https://www.dia.es",
+  "Alcampo":"https://www.compraonline.alcampo.es",
+  "Lidl":"https://www.lidl.es",
+  "El Corte Inglés":"https://www.elcorteingles.es/supermercado"
+};
+
+// p = [Mercadona, Carrefour, Dia, Alcampo, Lidl, ECI]; null = no lo tienen / sin dato
+var BASE = [
+  // RON
+  {id:"ron-brugal",  n:"Ron Brugal Añejo",        f:"1 L",       c:"Ron",      p:[15.95,15.80,15.99,15.79,null,15.45]},
+  {id:"ron-barcelo", n:"Ron Barceló Añejo",       f:"1 L",       c:"Ron",      p:[14.95,14.50,14.99,14.20,null,15.20]},
+  {id:"ron-bacardi", n:"Ron Bacardí Carta Blanca",f:"1 L",       c:"Ron",      p:[16.50,16.20,16.75,15.95,null,16.90]},
+  {id:"ron-cacique", n:"Ron Cacique Añejo",       f:"1 L",       c:"Ron",      p:[15.50,15.10,15.60,14.95,null,15.90]},
+  {id:"ron-negrita", n:"Ron Negrita",             f:"1 L",       c:"Ron",      p:[12.95,12.50,12.99,12.30,null,13.10]},
+  {id:"ron-morgan",  n:"Captain Morgan Spiced",   f:"70 cl",     c:"Ron",      p:[13.90,13.50,13.99,13.20,null,14.20]},
+  // GINEBRA
+  {id:"gin-larios",  n:"Ginebra Larios",          f:"1 L",       c:"Ginebra",  p:[12.95,12.60,12.99,12.40,null,13.20]},
+  {id:"gin-beef",    n:"Ginebra Beefeater",       f:"1 L",       c:"Ginebra",  p:[17.95,17.50,17.99,16.90,null,18.20]},
+  {id:"gin-tanq",    n:"Ginebra Tanqueray",       f:"70 cl",     c:"Ginebra",  p:[16.50,15.90,16.75,15.75,null,16.90]},
+  {id:"gin-puerto",  n:"Puerto de Indias Fresa",  f:"70 cl",     c:"Ginebra",  p:[17.95,16.90,17.50,16.75,null,18.50]},
+  {id:"gin-bombay",  n:"Bombay Sapphire",         f:"70 cl",     c:"Ginebra",  p:[17.50,16.95,17.75,16.50,null,17.90]},
+  {id:"gin-fjord",   n:"Ginebra Fjord (Lidl)",    f:"70 cl",     c:"Ginebra",  p:[null,null,null,null,7.99,null]},
+  // WHISKY
+  {id:"wh-jb",       n:"Whisky J&B",              f:"1 L",       c:"Whisky",   p:[15.50,15.20,15.60,14.90,null,15.90]},
+  {id:"wh-ball",     n:"Whisky Ballantine's",     f:"1 L",       c:"Whisky",   p:[15.95,15.50,15.99,14.99,null,16.20]},
+  {id:"wh-jack",     n:"Jack Daniel's",           f:"70 cl",     c:"Whisky",   p:[19.95,19.50,19.99,18.90,null,20.50]},
+  {id:"wh-dyc",      n:"Whisky DYC 8 años",       f:"70 cl",     c:"Whisky",   p:[12.50,12.20,12.60,11.90,null,12.90]},
+  // VODKA / TEQUILA
+  {id:"vo-absolut",  n:"Vodka Absolut",           f:"1 L",       c:"Vodka",    p:[17.50,16.95,17.60,16.50,null,17.90]},
+  {id:"vo-smirnoff", n:"Vodka Smirnoff",          f:"1 L",       c:"Vodka",    p:[15.95,15.50,15.99,14.95,null,16.20]},
+  {id:"vo-eristoff", n:"Vodka Eristoff",          f:"1 L",       c:"Vodka",    p:[14.50,14.20,14.60,13.90,null,14.90]},
+  {id:"te-cuervo",   n:"Tequila José Cuervo",     f:"70 cl",     c:"Tequila",  p:[16.95,16.50,16.99,15.90,null,17.50]},
+  // LICORES
+  {id:"li-jager",    n:"Jägermeister",            f:"70 cl",     c:"Licores",  p:[14.95,14.50,14.99,13.95,null,15.20]},
+  {id:"li-43",       n:"Licor 43",                f:"70 cl",     c:"Licores",  p:[15.95,15.40,15.99,14.90,null,16.20]},
+  {id:"li-baileys",  n:"Baileys",                 f:"70 cl",     c:"Licores",  p:[13.95,13.50,13.99,12.95,null,14.20]},
+  // CERVEZA
+  {id:"ce-mahou",    n:"Mahou Cinco Estrellas",   f:"24 x 33 cl",c:"Cerveza",  p:[14.95,13.99,14.50,13.50,null,15.20]},
+  {id:"ce-estrella", n:"Estrella Galicia",        f:"24 x 33 cl",c:"Cerveza",  p:[16.95,15.99,16.50,15.50,null,17.20]},
+  {id:"ce-cruz",     n:"Cruzcampo",               f:"24 x 33 cl",c:"Cerveza",  p:[11.95,10.99,11.50,10.50,null,12.20]},
+  {id:"ce-heineken", n:"Heineken",                f:"24 x 33 cl",c:"Cerveza",  p:[17.95,16.99,17.50,16.50,null,18.20]},
+  {id:"ce-amstel",   n:"Amstel",                  f:"24 x 33 cl",c:"Cerveza",  p:[12.95,11.99,12.50,11.50,null,13.20]},
+  {id:"ce-perlen",   n:"Perlenbacher (Lidl)",     f:"24 x 33 cl",c:"Cerveza",  p:[null,null,null,null,8.99,null]},
+  // VINO / CAVA / SIDRA
+  {id:"vi-tinto",    n:"Tinto de verano Don Simón",f:"1,5 L",    c:"Vino",     p:[1.35,1.29,1.39,1.25,1.19,1.45]},
+  {id:"vi-rioja",    n:"Vino tinto Rioja crianza",f:"75 cl",     c:"Vino",     p:[4.95,4.49,4.79,4.35,3.99,5.20]},
+  {id:"vi-cava",     n:"Cava Freixenet Carta Nevada",f:"75 cl",  c:"Vino",     p:[5.95,5.49,5.99,5.25,null,6.20]},
+  {id:"vi-sidra",    n:"Sidra El Gaitero",        f:"75 cl",     c:"Vino",     p:[2.95,2.79,2.99,2.65,null,3.10]},
+  // REFRESCOS Y MEZCLADORES
+  {id:"re-cocacola", n:"Coca-Cola",               f:"2 L",       c:"Refrescos",p:[2.35,2.29,2.39,2.19,null,2.45]},
+  {id:"re-cocazero", n:"Coca-Cola Zero",          f:"2 L",       c:"Refrescos",p:[2.35,2.29,2.39,2.19,null,2.45]},
+  {id:"re-fanta",    n:"Fanta Naranja",           f:"2 L",       c:"Refrescos",p:[2.05,1.99,2.09,1.95,null,2.15]},
+  {id:"re-tonica",   n:"Tónica Schweppes",        f:"6 x 20 cl", c:"Refrescos",p:[3.45,3.29,3.49,3.19,null,3.60]},
+  {id:"re-nordic",   n:"Tónica Nordic Mist",      f:"1,5 L",     c:"Refrescos",p:[1.55,1.49,1.59,1.45,null,1.65]},
+  {id:"re-aquarius", n:"Aquarius Limón",          f:"2 L",       c:"Refrescos",p:[2.15,2.09,2.19,1.99,null,2.25]},
+  {id:"re-nestea",   n:"Nestea Limón",            f:"1,5 L",     c:"Refrescos",p:[1.85,1.79,1.89,1.75,null,1.95]},
+  {id:"re-redbull",  n:"Red Bull",                f:"25 cl",     c:"Refrescos",p:[1.45,1.39,1.49,1.35,0.89,1.55]},
+  {id:"re-zumo",     n:"Zumo de piña Don Simón",  f:"1 L",       c:"Refrescos",p:[1.25,1.19,1.29,1.15,1.09,1.35]},
+  {id:"re-agua",     n:"Agua mineral",            f:"6 x 1,5 L", c:"Refrescos",p:[2.40,2.29,2.45,2.19,1.99,2.55]},
+  // FIESTA
+  {id:"fi-hielo",    n:"Bolsa de hielo",          f:"2 kg",      c:"Fiesta",   p:[1.75,1.69,1.79,1.65,1.59,1.85]},
+  {id:"fi-vasos",    n:"Vasos de plástico",       f:"50 ud",     c:"Fiesta",   p:[2.50,2.30,2.45,2.20,1.99,2.60]},
+  {id:"fi-limon",    n:"Limones",                 f:"1 kg",      c:"Fiesta",   p:[1.95,1.89,1.99,1.79,1.69,2.10]}
+];
+
+/* ============================================================
+   2. ESTADO + GUARDADO (db compartida si se puede, si no local)
+   ============================================================ */
+var LS_NOMBRE = "pena_nombre";
+var LS_DATOS  = "pena_datos_v1";
+
+var st = {
+  nombre: "",
+  items: [],        // {id, pid, nombre, formato, super, precio, qty, quien, ts}
+  overrides: {},     // "pid|Super" -> precio
+  extras: [],        // productos añadidos a mano
+  tab: "buscar",
+  q: "",
+  cat: "Todo",
+  editando: {},      // pid -> bool
+  modo: "local",     // "db" | "local"
+  db: null
+};
+
+function lsGet(){ try{ return JSON.parse(localStorage.getItem(LS_DATOS)||"{}"); }catch(e){ return {}; } }
+function lsSave(){
+  try{
+    localStorage.setItem(LS_DATOS, JSON.stringify({items:st.items, overrides:st.overrides, extras:st.extras}));
+  }catch(e){}
+}
+
+function cargarLocal(){
+  var d = lsGet();
+  st.items = Array.isArray(d.items)? d.items : [];
+  st.overrides = d.overrides && typeof d.overrides==="object" ? d.overrides : {};
+  st.extras = Array.isArray(d.extras)? d.extras : [];
+}
+
+var API = null;                 // ruta de la API cuando corre en tu servidor (Render)
+var ultimoJSON = "";            // para no repintar si no ha cambiado nada
+
+function aplicarEstado(d){
+  st.items = (d.items||[]).map(function(o){ return {
+    id:String(o.id), pid:o.pid, nombre:o.nombre, formato:o.formato, super:o.super,
+    precio:Number(o.precio)||0, qty:Number(o.qty)||1, quien:o.quien||"?", ts:Number(o.ts)||0
+  };});
+  var ov = d.precios||{}, lim = {};
+  Object.keys(ov).forEach(function(k){ var v = Number(ov[k]); lim[k] = isNaN(v) ? -1 : v; });
+  st.overrides = lim;
+  st.extras = (d.productos||[]).map(function(v){ return {
+    id:String(v.id), n:v.n, f:v.f, c:v.c,
+    p: Array.isArray(v.p)? v.p : SUPERS.map(function(){return null;})
+  };});
+}
+
+async function apiPost(ruta, body){
+  var r = await fetch(API+ruta, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)});
+  if(!r.ok) throw new Error("api "+r.status);
+  aplicarEstado(await r.json());
+}
+async function apiDelete(ruta){
+  var r = await fetch(API+ruta, {method:"DELETE"});
+  if(!r.ok) throw new Error("api "+r.status);
+  aplicarEstado(await r.json());
+}
+async function refrescar(){
+  if(st.modo!=="api") return;
+  try{
+    var r = await fetch(API+"state", {cache:"no-store"});
+    if(!r.ok) return;
+    var txt = await r.text();
+    if(txt===ultimoJSON) return;
+    ultimoJSON = txt;
+    aplicarEstado(JSON.parse(txt));
+    render();
+  }catch(e){}
+}
+
+async function initBackend(){
+  // 1) ¿Hay servidor propio detrás? entonces lista compartida de verdad
+  try{
+    var r = await fetch("api/state", {cache:"no-store"});
+    if(r.ok){
+      API = "api/";
+      st.modo = "api";
+      var txt = await r.text();
+      ultimoJSON = txt;
+      aplicarEstado(JSON.parse(txt));
+      render();
+      setInterval(refrescar, 5000);
+      document.addEventListener("visibilitychange", function(){ if(!document.hidden) refrescar(); });
+      return;
+    }
+  }catch(e){}
+  // 2) Si no, la base de datos del artefacto de Claude
+  await initDB();
+}
+
+async function initDB(){
+  var db=null;
+  try{ db = await (window.claude && window.claude.use ? window.claude.use("db") : null); }catch(e){ db=null; }
+  if(!db) return;
+  st.db = db; st.modo = "db";
+  try{
+    db.collection("carrito").onSnapshot(function(snap){
+      st.items = snap.docs.map(function(d){ var o=d.data()||{}; return {
+        id:d.id, pid:o.pid, nombre:o.nombre, formato:o.formato, super:o.super,
+        precio:Number(o.precio)||0, qty:Number(o.qty)||1, quien:o.quien||"?", ts:Number(o.ts)||0
+      };});
+      render();
+    }, function(){ });
+    db.collection("precios").onSnapshot(function(snap){
+      var o={}; snap.docs.forEach(function(d){ var v=d.data()||{}; if(v.clave) o[v.clave]=Number(v.precio); });
+      st.overrides=o; render();
+    }, function(){ });
+    db.collection("productos").onSnapshot(function(snap){
+      st.extras = snap.docs.map(function(d){ var v=d.data()||{}; return {
+        id:d.id, n:v.n, f:v.f, c:v.c, p:Array.isArray(v.p)? v.p : SUPERS.map(function(){return null;})
+      };});
+      render();
+    }, function(){ });
+  }catch(e){ st.modo="local"; }
+  render();
+}
+
+function nuevoId(){ return Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,7); }
+
+async function guardarItem(it){
+  if(st.modo==="api"){
+    try{ await apiPost("items", it); render(); return true; }
+    catch(e){ toast("No se ha podido guardar, ¿hay internet?"); return false; }
+  }
+  if(st.modo==="db" && st.db){
+    try{
+      await st.db.doc("carrito/"+it.id).set({
+        pid:it.pid, nombre:it.nombre, formato:it.formato, super:it.super,
+        precio:it.precio, qty:it.qty, quien:it.quien, ts:it.ts
+      });
+      return true;
+    }catch(e){ caerALocal(); }
+  }
+  var i = st.items.findIndex(function(x){return x.id===it.id;});
+  if(i>=0) st.items[i]=it; else st.items.push(it);
+  lsSave(); render(); return true;
+}
+async function borrarItem(id){
+  if(st.modo==="api"){
+    try{ await apiDelete("items/"+encodeURIComponent(id)); render(); }
+    catch(e){ toast("No se ha podido borrar, ¿hay internet?"); }
+    return;
+  }
+  if(st.modo==="db" && st.db){
+    try{ await st.db.doc("carrito/"+id).delete(); return; }catch(e){ caerALocal(); }
+  }
+  st.items = st.items.filter(function(x){return x.id!==id;});
+  lsSave(); render();
+}
+async function guardarPrecio(clave, precio){
+  if(st.modo==="api"){
+    try{ await apiPost("precios", {clave:clave, precio:precio, quien:st.nombre}); render(); }
+    catch(e){ toast("No se ha podido guardar el precio."); }
+    return;
+  }
+  if(st.modo==="db" && st.db){
+    try{
+      await st.db.doc("precios/"+clave.replace(/[^A-Za-z0-9_.~:@+-]/g,"_")).set({clave:clave, precio:precio, quien:st.nombre, ts:Date.now()});
+      return;
+    }catch(e){ caerALocal(); }
+  }
+  st.overrides[clave]=precio; lsSave(); render();
+}
+async function guardarProducto(p){
+  if(st.modo==="api"){
+    try{ await apiPost("productos", p); render(); }
+    catch(e){ toast("No se ha podido guardar la bebida."); }
+    return;
+  }
+  if(st.modo==="db" && st.db){
+    try{ await st.db.doc("productos/"+p.id).set({n:p.n,f:p.f,c:p.c,p:p.p,quien:st.nombre,ts:Date.now()}); return; }catch(e){ caerALocal(); }
+  }
+  st.extras.push(p); lsSave(); render();
+}
+function caerALocal(){
+  if(st.modo!=="local"){
+    st.modo="local"; cargarLocal();
+    toast("No se puede escribir en la lista compartida, así que se guarda solo en este móvil.");
+  }
+}
+
+/* ============================================================
+   3. UTILIDADES
+   ============================================================ */
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g, function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function eur(n){ return (Math.round(n*100)/100).toFixed(2).replace(".",",")+" €"; }
+function norm(s){ return String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""); }
+
+function catalogo(){
+  var todos = BASE.concat(st.extras);
+  return todos.map(function(p){
+    var precios = SUPERS.map(function(s,i){
+      var ov = st.overrides[p.id+"|"+s];
+      if(typeof ov === "number" && !isNaN(ov)) return ov < 0 ? null : ov;
+      var b = p.p[i];
+      return (typeof b === "number") ? b : null;
+    });
+    return {id:p.id, n:p.n, f:p.f, c:p.c, precios:precios};
+  });
+}
+function categorias(){
+  var c = ["Todo"];
+  catalogo().forEach(function(p){ if(c.indexOf(p.c)<0) c.push(p.c); });
+  return c;
+}
+function filtrar(){
+  var q = norm(st.q).trim();
+  return catalogo().filter(function(p){
+    if(st.cat!=="Todo" && p.c!==st.cat) return false;
+    if(!q) return true;
+    return norm(p.n+" "+p.c+" "+p.f).indexOf(q)>=0;
+  }).sort(function(a,b){
+    var ma=minPrecio(a), mb=minPrecio(b);
+    if(ma===null) return 1; if(mb===null) return -1;
+    return ma-mb;
+  });
+}
+function minPrecio(p){
+  var m=null;
+  p.precios.forEach(function(v){ if(typeof v==="number" && (m===null||v<m)) m=v; });
+  return m;
+}
+function total(){ return st.items.reduce(function(a,i){ return a + i.precio*i.qty; },0); }
+
+function toast(msg){
+  var host=document.getElementById("toast-host");
+  host.innerHTML='<div class="toast">'+esc(msg)+'</div>';
+  setTimeout(function(){ host.innerHTML=""; }, 3600);
+}
+
+/* ============================================================
+   4. RENDER
+   ============================================================ */
+var app = document.getElementById("app");
+
+function render(){
+  if(!st.nombre){ renderLogin(); return; }
+  var n = st.items.reduce(function(a,i){return a+i.qty;},0);
+  var html = ""
+    + '<header class="cartel"><div class="wrap" style="padding-bottom:0">'
+    +   '<div class="kicker">Peña Traketeros</div>'
+    +   '<h1>Traketeros<em>bebidas al mejor precio</em></h1>'
+    +   '<p>Busca la bebida, mira en qué súper sale más barata y mándala al carrito común.</p>'
+    +   '<div class="yo">Estás dentro como <strong>'+esc(st.nombre)+'</strong>'
+    +     '<button id="cambiar-nombre">Cambiar</button></div>'
+    + '</div></header>'
+    + '<div class="wrap">'
+    + '<nav class="tabs">'
+    +   '<button id="tab-buscar" aria-selected="'+(st.tab==="buscar")+'">Buscar</button>'
+    +   '<button id="tab-carrito" aria-selected="'+(st.tab==="carrito")+'">Carrito'+(n?'<span class="n">'+n+'</span>':'')+'</button>'
+    + '</nav>'
+    + (st.tab==="buscar" ? vistaBuscar() : vistaCarrito())
+    + '<p class="pie">Precios de referencia, no en directo: los supermercados los cambian a diario. Antes de ir, comprueba el que te interese y corrígelo con «Editar precios» para que lo vea toda la peña.'
+    +   '<span class="estado">Guardado: <b>'+(st.modo==="api"?"lista compartida de la peña":(st.modo==="db"?"lista compartida":"solo en este dispositivo"))+'</b></span></p>'
+    + '</div>';
+  var act = document.activeElement, foco = null, caret = null;
+  if(act && (act.id || act.getAttribute && act.getAttribute("data-precio-de"))){
+    foco = act.id ? "#"+act.id
+      : '[data-precio-de="'+act.getAttribute("data-precio-de")+'"][data-precio-super="'+act.getAttribute("data-precio-super")+'"]';
+    try{ caret = act.selectionStart; }catch(e){}
+  }
+  app.innerHTML = html;
+  conectar();
+  if(foco){
+    var el = document.querySelector(foco);
+    if(el && el.focus){ el.focus(); if(caret!=null){ try{ el.setSelectionRange(caret,caret); }catch(e){} } }
+  }
+}
+
+function renderLogin(){
+  app.innerHTML = ''
+  + '<div class="login"><div class="login-box">'
+  + '<div class="kicker">Peña Traketeros</div>'
+  + '<h1>Traketeros<em>bebidas al mejor precio</em></h1>'
+  + '<p>Pon tu nombre para que el resto vea quién ha metido cada cosa en el carrito.</p>'
+  + '<div class="login-row"><input id="in-nombre" placeholder="Tu nombre o mote" autocomplete="name" maxlength="24">'
+  + '<button class="btn-fuerte" id="btn-entrar">Entrar</button></div>'
+  + '</div></div>';
+  var inp=document.getElementById("in-nombre");
+  inp.focus();
+  function entrar(){
+    var v=(inp.value||"").trim();
+    if(!v){ inp.focus(); return; }
+    st.nombre=v.slice(0,24);
+    try{ localStorage.setItem(LS_NOMBRE, st.nombre); }catch(e){}
+    render();
+  }
+  document.getElementById("btn-entrar").onclick=entrar;
+  inp.addEventListener("keydown",function(e){ if(e.key==="Enter") entrar(); });
+}
+
+function vistaBuscar(){
+  var cats = categorias();
+  var lista = filtrar();
+  var h = ''
+  + '<div class="buscador"><input id="q" value="'+esc(st.q)+'" placeholder="Busca: ron, cerveza, tónica, hielo…" '
+  +   'autocomplete="off" enterkeyhint="search"><span class="lupa" aria-hidden="true">⌕</span></div>'
+  + '<div class="chips">'+cats.map(function(c){
+      return '<button data-cat="'+esc(c)+'" aria-pressed="'+(st.cat===c)+'">'+esc(c)+'</button>';
+    }).join('')+'</div>';
+
+  if(!lista.length){
+    h += '<div class="vacio"><b>Ninguna bebida con ese nombre.</b>Prueba con otra palabra o añádela tú abajo con su precio.</div>';
+  }
+  lista.forEach(function(p){
+    var m = minPrecio(p);
+    var filas = [];
+    SUPERS.forEach(function(s,i){
+      var v = p.precios[i];
+      if(v===null) return;
+      var enCarro = st.items.some(function(it){ return it.pid===p.id && it.super===s; });
+      filas.push({s:s,v:v,i:i,mejor:(v===m),enCarro:enCarro});
+    });
+    filas.sort(function(a,b){ return a.v-b.v; });
+
+    h += '<article class="prod" data-pid="'+esc(p.id)+'">'
+      + '<div class="prod-top"><div><h3>'+esc(p.n)+'</h3><div class="fmt">'+esc(p.f)+'</div></div>'
+      + '<div class="cat">'+esc(p.c)+'</div></div>';
+
+    if(!filas.length){
+      h += '<div class="fmt" style="margin-top:8px">Sin precios todavía. Añádelos en «Editar precios».</div>';
+    } else {
+      h += '<div class="precios">';
+      filas.forEach(function(f){
+        h += '<div class="fila'+(f.mejor?' mejor':'')+'">'
+          + '<div class="super">'+esc(f.s)+(f.mejor?'<span class="mejor-tag">más barato</span>':'')+'</div>'
+          + '<div class="eur">'+eur(f.v)+(f.mejor?'':'<small>+'+eur(f.v-m).replace(" €","")+'</small>')+'</div>'
+          + '<button class="add'+(f.enCarro?' puesto':'')+'" data-add="'+esc(p.id)+'" data-super="'+esc(f.s)+'" data-precio="'+f.v+'">'
+          +   (f.enCarro?'+1':'Añadir')+'</button>'
+          + '</div>';
+      });
+      h += '</div>';
+    }
+
+    h += '<div class="prod-acciones">'
+      + '<button class="linkish" data-edit="'+esc(p.id)+'">'+(st.editando[p.id]?'Cerrar precios':'Editar precios')+'</button>'
+      + (WEBS[filas.length?filas[0].s:""] ? '<a class="linkish" href="'+WEBS[filas[0].s]+'" target="_blank" rel="noopener">Ir a '+esc(filas[0].s)+'</a>' : '')
+      + '</div>';
+
+    if(st.editando[p.id]){
+      h += '<div class="edit-precios">';
+      SUPERS.forEach(function(s,i){
+        var v = p.precios[i];
+        h += '<div class="edit-fila"><label style="margin:0">'+esc(s)+'</label>'
+          + '<input type="number" step="0.01" min="0" inputmode="decimal" placeholder="—" value="'+(v===null?"":v)+'" '
+          + 'data-precio-de="'+esc(p.id)+'" data-precio-super="'+esc(s)+'"></div>';
+      });
+      h += '<div class="fmt">Se guarda al salir del campo. Deja vacío si ese súper no lo tiene.</div></div>';
+    }
+    h += '</article>';
+  });
+
+  h += formNuevo();
+  return h;
+}
+
+function formNuevo(){
+  return '<div class="form-nuevo"><h3>Añadir una bebida que no esté</h3>'
+  + '<div class="campos">'
+  + '<div><label for="np-n">Nombre</label><input id="np-n" placeholder="Ron Pampero"></div>'
+  + '<div><label for="np-f">Formato</label><input id="np-f" placeholder="1 L"></div>'
+  + '<div><label for="np-c">Categoría</label><input id="np-c" placeholder="Ron"></div>'
+  + '<div><label for="np-s">Súper</label><select id="np-s">'+SUPERS.map(function(s){return '<option>'+esc(s)+'</option>';}).join('')+'</select></div>'
+  + '<div><label for="np-p">Precio (€)</label><input id="np-p" type="number" step="0.01" min="0" inputmode="decimal" placeholder="13,50"></div>'
+  + '<div class="ancho"><button class="btn-fuerte" id="np-add" style="width:100%">Guardar bebida</button></div>'
+  + '</div></div>';
+}
+
+function vistaCarrito(){
+  if(!st.items.length){
+    return '<div class="vacio" style="padding-top:34px"><b>El carrito está vacío.</b>'
+      + 'Vete a «Buscar», elige el súper más barato y dale a Añadir. Lo que metáis se va guardando.</div>';
+  }
+  var items = st.items.slice().sort(function(a,b){ return (a.ts||0)-(b.ts||0); });
+  var h = '<div class="total-band"><div><div class="lbl">Total del carrito</div>'
+        + '<div class="big">'+eur(total())+'</div></div>'
+        + '<div style="text-align:right"><div class="lbl">Bebidas</div><div class="big">'
+        + items.reduce(function(a,i){return a+i.qty;},0)+'</div></div></div>';
+
+  items.forEach(function(it){
+    h += '<div class="item">'
+      + '<div><div class="n">'+esc(it.nombre)+'</div>'
+      + '<div class="meta">'+esc(it.formato)+' · '+esc(it.super)+' · '+eur(it.precio)+' c/u<br>'
+      + 'lo metió <span class="quien">'+esc(it.quien)+'</span></div></div>'
+      + '<div class="item-der">'
+      +   '<div class="eur">'+eur(it.precio*it.qty)+'</div>'
+      +   '<div class="qty"><button data-menos="'+esc(it.id)+'" aria-label="Quitar uno">−</button>'
+      +   '<span>'+it.qty+'</span><button data-mas="'+esc(it.id)+'" aria-label="Añadir uno">+</button></div>'
+      +   '<button class="del" data-del="'+esc(it.id)+'" aria-label="Eliminar">✕</button>'
+      + '</div></div>';
+  });
+
+  // por súper
+  var porSuper={}, porPersona={};
+  items.forEach(function(i){
+    porSuper[i.super]=(porSuper[i.super]||0)+i.precio*i.qty;
+    porPersona[i.quien]=(porPersona[i.quien]||0)+i.precio*i.qty;
+  });
+  h += '<div class="resumen"><h3>Cuánto se gasta en cada súper</h3>';
+  Object.keys(porSuper).sort(function(a,b){return porSuper[b]-porSuper[a];}).forEach(function(s){
+    h += '<div class="res-fila"><span>'+esc(s)+'</span><span>'+eur(porSuper[s])+'</span></div>';
+  });
+  h += '</div><div class="resumen"><h3>Quién ha metido qué</h3>';
+  Object.keys(porPersona).sort(function(a,b){return porPersona[b]-porPersona[a];}).forEach(function(s){
+    h += '<div class="res-fila"><span>'+esc(s)+'</span><span>'+eur(porPersona[s])+'</span></div>';
+  });
+  h += '</div>';
+
+  h += '<div class="acciones-carrito">'
+    + '<button class="primario" id="copiar">Copiar lista para el grupo</button>'
+    + '<button class="peligro" id="vaciar">Vaciar carrito</button>'
+    + '</div>';
+  return h;
+}
+
+/* ============================================================
+   5. EVENTOS
+   ============================================================ */
+function conectar(){
+  var q=document.getElementById("q");
+  if(q){
+    q.oninput=function(){ st.q=q.value; var p=q.selectionStart; render();
+      var q2=document.getElementById("q"); if(q2){ q2.focus(); try{q2.setSelectionRange(p,p);}catch(e){} } };
+  }
+  document.querySelectorAll("[data-cat]").forEach(function(b){
+    b.onclick=function(){ st.cat=b.getAttribute("data-cat"); render(); };
+  });
+  var tb=document.getElementById("tab-buscar"), tc=document.getElementById("tab-carrito");
+  if(tb) tb.onclick=function(){ st.tab="buscar"; render(); window.scrollTo(0,0); };
+  if(tc) tc.onclick=function(){ st.tab="carrito"; render(); window.scrollTo(0,0); };
+
+  var cn=document.getElementById("cambiar-nombre");
+  if(cn) cn.onclick=function(){ st.nombre=""; try{localStorage.removeItem(LS_NOMBRE);}catch(e){} render(); };
+
+  document.querySelectorAll("[data-add]").forEach(function(b){
+    b.onclick=function(){
+      var pid=b.getAttribute("data-add"), sup=b.getAttribute("data-super"), pr=parseFloat(b.getAttribute("data-precio"));
+      var prod=catalogo().filter(function(p){return p.id===pid;})[0];
+      if(!prod) return;
+      var ya=st.items.filter(function(i){return i.pid===pid && i.super===sup;})[0];
+      if(ya){
+        ya=Object.assign({},ya,{qty:ya.qty+1,precio:pr});
+        guardarItem(ya);
+      } else {
+        guardarItem({id:nuevoId(),pid:pid,nombre:prod.n,formato:prod.f,super:sup,precio:pr,qty:1,quien:st.nombre,ts:Date.now()});
+      }
+      toast(prod.n+" · "+sup+" → al carrito");
+    };
+  });
+
+  document.querySelectorAll("[data-edit]").forEach(function(b){
+    b.onclick=function(){ var pid=b.getAttribute("data-edit"); st.editando[pid]=!st.editando[pid]; render(); };
+  });
+  document.querySelectorAll("[data-precio-de]").forEach(function(inp){
+    inp.onchange=function(){
+      var pid=inp.getAttribute("data-precio-de"), sup=inp.getAttribute("data-precio-super");
+      var v=inp.value.trim()===""?null:parseFloat(inp.value.replace(",","."));
+      if(v!==null && (isNaN(v)||v<0)) return;
+      guardarPrecio(pid+"|"+sup, v===null?-1:v);
+      toast(v===null ? sup+": marcado como no disponible" : "Precio actualizado: "+sup);
+    };
+  });
+
+  var add=document.getElementById("np-add");
+  if(add) add.onclick=function(){
+    var n=(document.getElementById("np-n").value||"").trim();
+    var f=(document.getElementById("np-f").value||"").trim()||"—";
+    var c=(document.getElementById("np-c").value||"").trim()||"Otros";
+    var s=document.getElementById("np-s").value;
+    var pv=parseFloat((document.getElementById("np-p").value||"").replace(",","."));
+    if(!n){ toast("Ponle nombre a la bebida."); return; }
+    if(isNaN(pv)||pv<0){ toast("Falta el precio."); return; }
+    var p={id:"x-"+nuevoId(), n:n, f:f, c:c, p:SUPERS.map(function(x){ return x===s?pv:null; })};
+    guardarProducto(p);
+    st.q=n; st.cat="Todo";
+    toast(n+" añadida al catálogo");
+    render();
+  };
+
+  document.querySelectorAll("[data-del]").forEach(function(b){
+    b.onclick=function(){ borrarItem(b.getAttribute("data-del")); };
+  });
+  document.querySelectorAll("[data-mas]").forEach(function(b){
+    b.onclick=function(){
+      var it=st.items.filter(function(i){return i.id===b.getAttribute("data-mas");})[0];
+      if(it) guardarItem(Object.assign({},it,{qty:it.qty+1}));
+    };
+  });
+  document.querySelectorAll("[data-menos]").forEach(function(b){
+    b.onclick=function(){
+      var it=st.items.filter(function(i){return i.id===b.getAttribute("data-menos");})[0];
+      if(!it) return;
+      if(it.qty<=1) borrarItem(it.id); else guardarItem(Object.assign({},it,{qty:it.qty-1}));
+    };
+  });
+  var vac=document.getElementById("vaciar");
+  if(vac) vac.onclick=function(){
+    if(!confirm("¿Vaciar el carrito entero? Se borra para todos los Traketeros.")) return;
+    if(st.modo==="api"){ apiDelete("items").then(render, function(){ toast("No se ha podido vaciar."); }); return; }
+    st.items.slice().forEach(function(i){ borrarItem(i.id); });
+  };
+  var cop=document.getElementById("copiar");
+  if(cop) cop.onclick=function(){
+    var porSuper={};
+    st.items.forEach(function(i){ (porSuper[i.super]=porSuper[i.super]||[]).push(i); });
+    var t="🍹 COMPRA DE LOS TRAKETEROS\n";
+    Object.keys(porSuper).forEach(function(s){
+      var sub=porSuper[s].reduce(function(a,i){return a+i.precio*i.qty;},0);
+      t+="\n— "+s+" ("+eur(sub)+")\n";
+      porSuper[s].forEach(function(i){
+        t+="• "+i.qty+"x "+i.nombre+" "+i.formato+" — "+eur(i.precio*i.qty)+" ("+i.quien+")\n";
+      });
+    });
+    t+="\nTOTAL: "+eur(total());
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(function(){ toast("Lista copiada, pégala en el grupo."); },
+        function(){ pedirCopia(t); });
+    } else pedirCopia(t);
+  };
+}
+function pedirCopia(t){
+  var ta=document.createElement("textarea");
+  ta.value=t; ta.style.position="fixed"; ta.style.left="-9999px";
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand("copy"); toast("Lista copiada, pégala en el grupo."); }
+  catch(e){ toast("No he podido copiar; selecciona la lista a mano."); }
+  document.body.removeChild(ta);
+}
+
+/* ============================================================
+   6. ARRANQUE
+   ============================================================ */
+try{ st.nombre = localStorage.getItem(LS_NOMBRE) || ""; }catch(e){}
+cargarLocal();
+render();
+initBackend();
+
+})();
+</script>
+</body>
+</html>
